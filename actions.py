@@ -1,0 +1,11 @@
+class Action:
+  pass
+
+class QuitAction(Action):
+  pass
+
+class MoveAction(Action):
+  def __init__(self, dx: int, dy: int):
+    super().__init__()
+    self.dx = dx
+    self.dy = dy

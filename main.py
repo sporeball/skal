@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import tcod
 
-from actions import MoveAction, QuitAction
+from engine import Engine
 from entity import Entity
 from input_handlers import EventHandler
 
@@ -23,6 +23,8 @@ def main() -> None:
   )
   entities = { player }
 
+  engine = Engine(entities=entities, event_handler=event_handler, player=player)
+
   with tcod.context.new(
     columns=columns,
     rows=rows,
@@ -31,17 +33,9 @@ def main() -> None:
   ) as context:
     root_console = tcod.console.Console(columns, rows, order="F")
     while True:
-      root_console.print(x=player.x, y=player.y, text=player.char, fg=player.color)
-      context.present(root_console)
-      root_console.clear()
-      for event in tcod.event.wait():
-        action = event_handler.dispatch(event)
-        if action is None:
-          continue
-        if isinstance(action, MoveAction):
-          player.move(dx=action.dx, dy=action.dy)
-        elif isinstance(action, QuitAction):
-          raise SystemExit()
+      engine.render(console=root_console, context=context)
+      events = tcod.event.wait()
+      engine.handle_events(events)
 
 if __name__ == "__main__":
   main()

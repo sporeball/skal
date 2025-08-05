@@ -2,19 +2,26 @@
 import tcod
 
 from actions import MoveAction, QuitAction
+from entity import Entity
 from input_handlers import EventHandler
 
 def main() -> None:
   columns = 40
   rows = 30
-  player_x = int(columns / 2) - 1
-  player_y = int(rows / 2) - 1
 
   tileset = tcod.tileset.load_tilesheet(
     "dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD
   )
 
   event_handler = EventHandler()
+
+  player = Entity(
+    int(columns / 2),
+    int(rows / 2),
+    "@",
+    (255, 255, 255),
+  )
+  entities = { player }
 
   with tcod.context.new(
     columns=columns,
@@ -24,7 +31,7 @@ def main() -> None:
   ) as context:
     root_console = tcod.console.Console(columns, rows, order="F")
     while True:
-      root_console.print(x=player_x, y=player_y, text="@")
+      root_console.print(x=player.x, y=player.y, text=player.char, fg=player.color)
       context.present(root_console)
       root_console.clear()
       for event in tcod.event.wait():
@@ -32,8 +39,7 @@ def main() -> None:
         if action is None:
           continue
         if isinstance(action, MoveAction):
-          player_x += action.dx
-          player_y += action.dy
+          player.move(dx=action.dx, dy=action.dy)
         elif isinstance(action, QuitAction):
           raise SystemExit()
 

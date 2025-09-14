@@ -28,10 +28,15 @@ def new_tile(
 ) -> np.ndarray:
   return np.array((walkable, transparent, dark), dtype=tile_data)
 
-floor = new_tile(
+void = new_tile(
   walkable=True,
   transparent=True,
   dark=(ord(" "), (255, 255, 255), (0x12, 0x0E, 0x14)),
+)
+floor = new_tile(
+  walkable=True,
+  transparent=True,
+  dark=(ord(" "), (255, 255, 255), (0x23, 0x17, 0x2D)),
 )
 wall = new_tile(
   walkable=False,

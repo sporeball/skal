@@ -17,6 +17,9 @@ def main() -> None:
 
   map_width = 40
   map_height = 30
+  max_rooms = 30
+  min_room_size = 5
+  max_room_size = 10
 
   tileset = tcod.tileset.load_tilesheet(
     "dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD
@@ -32,7 +35,14 @@ def main() -> None:
   )
   entities = { player }
 
-  world_map = generate_world_map(map_width, map_height)
+  world_map = generate_world_map(
+    map_width,
+    map_height,
+    max_rooms,
+    min_room_size,
+    max_room_size,
+    player,
+  )
 
   engine = Engine(entities=entities, event_handler=event_handler, player=player, world_map=world_map)
 

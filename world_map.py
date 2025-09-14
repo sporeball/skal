@@ -42,8 +42,8 @@ class WorldMap:
     # dig tunnel
     for x, y in l1 + l2:
       self.tiles[x, y] = tile.floor
-      for vx, vy in self.void_neighbors(x, y):
-        self.tiles[vx, vy] = tile.wall
+      # for vx, vy in self.void_neighbors(x, y):
+      #   self.tiles[vx, vy] = tile.wall
   def in_bounds(self, x: int, y: int) -> bool:
     return 0 <= x < self.width and 0 <= y < self.height
   def render(self, console: tcod.console.Console) -> None:

@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 import tcod
 
+# python3 -m venv .venv
+# source .venv/bin/activate
+# pip install -r requirements.txt
+# python main.py
+
 from engine import Engine
 from entity import Entity
 from input_handlers import EventHandler
-from world_map import WorldMap
+from procgen import generate_world_map
 
 def main() -> None:
   columns = 40
@@ -27,7 +32,7 @@ def main() -> None:
   )
   entities = { player }
 
-  world_map = WorldMap(map_width, map_height)
+  world_map = generate_world_map(map_width, map_height)
 
   engine = Engine(entities=entities, event_handler=event_handler, player=player, world_map=world_map)
 
